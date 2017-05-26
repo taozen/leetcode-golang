@@ -40,3 +40,21 @@ func TestUnequalLength(t *testing.T) {
 	y := []int{2, 4, 7, 8, 10}
 	testImpl(t, x, y, 6.0)
 }
+
+func TestUnequalLength2(t *testing.T) {
+	x := []int{1, 2}
+	y := []int{3, 4, 5}
+	testImpl(t, x, y, 3.0)
+}
+
+func TestUnequalLength3(t *testing.T) {
+	x := []int{1, 2, 3, 4, 5, 6}
+	y := []int{7, 8, 9}
+	testImpl(t, x, y, 5.0)
+}
+
+func TestUnequalLength4(t *testing.T) {
+	x := []int{1, 2, 3, 4, 5, 6}
+	y := []int{7, 8, 9, 10}
+	testImpl(t, x, y, 5.5)
+}

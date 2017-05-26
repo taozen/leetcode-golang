@@ -16,43 +16,48 @@ nums2 = [3, 4]
 The median is (2 + 3)/2 = 2.5
 */
 
-func findMedianSortedArrays(num1, num2 []int) float64 {
-	len1, len2 := len(num1), len(num2)
-	totalLen := len1 + len2
+func min(x, y int) int {
+	if x < y {
+		return x
+	}
+	return y
+}
+
+func findKthSmallest(k int, x, y []int) int {
+	if len(x) > len(y) {
+		return findKthSmallest(k, y, x)
+	}
+
+	lenX := len(x)
+
+	if lenX == 0 {
+		return y[k-1]
+	}
+
+	if k == 1 {
+		return min(x[0], y[0])
+	}
+
+	kX := min(k/2, lenX)
+	kY := k - kX
+
+	if x[kX-1] < y[kY-1] {
+		return findKthSmallest(k-kX, x[kX:], y)
+	}
+
+	return findKthSmallest(k-kY, x, y[kY:])
+}
+
+func findMedianSortedArrays(x, y []int) float64 {
+	totalLen := len(x) + len(y)
 
 	if totalLen == 0 {
 		return 0.0
+	} else if totalLen%2 == 0 {
+		m1 := findKthSmallest(totalLen/2, x, y)
+		m2 := findKthSmallest(totalLen/2+1, x, y)
+		return float64(m1+m2) / 2.0
+	} else {
+		return float64(findKthSmallest(totalLen/2+1, x, y))
 	}
-
-	half := (totalLen - 1) / 2
-	medianCnt := 1
-
-	if totalLen%2 == 0 {
-		medianCnt++
-	}
-
-	medianAry := make([]int, medianCnt)
-
-	for i, i1, i2 := 0, 0, 0; i < half+medianCnt; i++ {
-		idx := i % medianCnt
-		if i1 == len1 {
-			medianAry[idx] = num2[i2]
-			i2++
-		} else if i2 == len2 {
-			medianAry[idx] = num1[i1]
-			i1++
-		} else if num1[i1] < num2[i2] {
-			medianAry[idx] = num1[i1]
-			i1++
-		} else {
-			medianAry[idx] = num2[i2]
-			i2++
-		}
-	}
-
-	if medianCnt == 1 {
-		return float64(medianAry[0])
-	}
-
-	return (float64(medianAry[0]) + float64(medianAry[1])) / 2
 }
