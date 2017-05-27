@@ -93,6 +93,32 @@ func longestPalindrome3(s string) string {
 	return s[maxPos : maxPos+maxLen]
 }
 
+// O(N^2)
+func longestPalindrome4(s string) string {
+	ans := ""
+	slen := len(s)
+
+	for i := 0; i < slen; i++ {
+		j, k := i, i
+		for k < slen-1 && s[k] == s[k+1] {
+			k++
+		}
+		i = k
+		for j > 0 && k < slen-1 && s[j-1] == s[k+1] {
+			j--
+			k++
+		}
+
+		xlen := k - j + 1
+		if xlen > len(ans) {
+			ans = s[j : k+1]
+		}
+
+	}
+
+	return ans
+}
+
 func longestPalindrome(s string) string {
-	return longestPalindrome3(s)
+	return longestPalindrome4(s)
 }
