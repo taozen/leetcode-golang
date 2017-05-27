@@ -98,22 +98,25 @@ func longestPalindrome4(s string) string {
 	ans := ""
 	slen := len(s)
 
-	for i := 0; i < slen; i++ {
-		j, k := i, i
-		for k < slen-1 && s[k] == s[k+1] {
-			k++
+	for pivot := 0; pivot < slen; pivot++ {
+		lo, hi := pivot, pivot
+
+		// Move hi forward on repeated char such that
+		// single-pivot and double-pivots cases are unified.
+		for hi < slen-1 && s[hi] == s[hi+1] {
+			hi++
 		}
-		i = k
-		for j > 0 && k < slen-1 && s[j-1] == s[k+1] {
-			j--
-			k++
+		pivot = hi
+
+		for lo > 0 && hi < slen-1 && s[lo-1] == s[hi+1] {
+			lo--
+			hi++
 		}
 
-		xlen := k - j + 1
+		xlen := hi - lo + 1
 		if xlen > len(ans) {
-			ans = s[j : k+1]
+			ans = s[lo : hi+1]
 		}
-
 	}
 
 	return ans
