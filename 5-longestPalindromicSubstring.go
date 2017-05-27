@@ -19,18 +19,14 @@ func isPalindrome(s string) bool {
 }
 
 func longestPalindrome(s string) string {
-	queue := []string{s}
-
-	for len(queue) > 0 {
-		head := queue[0]
-
-		if isPalindrome(head) {
-			return head
+	totalLen := len(s)
+	for len := totalLen; len > 0; len-- {
+		for start := 0; start < totalLen-len+1; start++ {
+			x := s[start : start+len]
+			if isPalindrome(x) {
+				return x
+			}
 		}
-
-		queue[0] = ""
-		queue = queue[1:]
-		queue = append(queue, head[:len(head)-1], head[1:])
 	}
 
 	return ""
