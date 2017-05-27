@@ -13,6 +13,7 @@ func testImpl(t *testing.T, in, expected string) {
 
 func TestLongestPalindrome(t *testing.T) {
 	testImpl(t, "abccba", "abccba")
+	testImpl(t, "abcdasdfghjkldcba", "a")
 	testImpl(t, "aba", "aba")
 	testImpl(t, "abbca", "bb")
 	testImpl(t, "abbc", "bb")
