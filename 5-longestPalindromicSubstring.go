@@ -1,5 +1,7 @@
 package leetcode
 
+import "bytes"
+
 /*
 Given a string s, find the longest palindromic substring in s.
 You may assume that the maximum length of s is 1000.
@@ -116,7 +118,8 @@ func longestPalindrome4(s string) string {
 		lo, hi := pivot, pivot
 
 		// Move hi forward on repeated char such that
-		// single-pivot and double-pivots cases are unified.
+		// odd length palindrome and even length palindrome
+		// cases are unified.
 		for hi < sLen-1 && s[hi] == s[hi+1] {
 			hi++
 		}
@@ -144,6 +147,7 @@ func min(x, y int) int {
 }
 
 // O(N) Manacher's algorightm
+// The way this method handles corner cases are too obscure and tricky.
 func longestPalindrome5(s string) string {
 	sLen := len(s)
 
@@ -198,6 +202,57 @@ outer:
 	return s[start : start+maxPalLen]
 }
 
+func extend(s string) string {
+	if len(s) == 0 {
+		return "^$"
+	}
+
+	var buf bytes.Buffer
+	buf.WriteByte('^')
+
+	for i := range s {
+		buf.WriteByte('#')
+		buf.WriteByte(s[i])
+	}
+
+	buf.WriteString("#$")
+	return buf.String()
+}
+
+// O(N) Manacher's algorightm
+func longestPalindrome6(s string) string {
+	xs := extend(s)
+	xLen := len(xs)
+	palLenAry := make([]int, xLen)
+	lastPivot, rightEdge, maxLen, maxPivot := 0, 0, 0, 0
+
+	for i := 1; i < xLen-1; i++ {
+		if rightEdge > i {
+			d, mirrorPalLen := rightEdge-i, palLenAry[2*lastPivot-i]
+			palLenAry[i] = min(d, mirrorPalLen)
+
+			// In the cases that d < mirrorPalLen or d > mirrorPalLen,
+			// the palindrome of pivot i doesn't expand beyond the right edge.
+			if d != mirrorPalLen {
+				continue
+			}
+		}
+
+		for xs[i+1+palLenAry[i]] == xs[i-1-palLenAry[i]] {
+			palLenAry[i]++
+		}
+
+		lastPivot, rightEdge = i, i+palLenAry[i]
+
+		if palLenAry[i] > maxLen {
+			maxPivot, maxLen = i, palLenAry[i]
+		}
+	}
+
+	start := (maxPivot - maxLen - 1) / 2
+	return s[start : start+maxLen]
+}
+
 func longestPalindrome(s string) string {
-	return longestPalindrome5(s)
+	return longestPalindrome6(s)
 }
