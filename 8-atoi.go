@@ -1,0 +1,41 @@
+package leetcode
+
+func myAtoi(s string) int {
+	i, slen := 0, len(s)
+	for i < slen && (s[i] == '\t' || s[i] == ' ') {
+		i++
+	}
+
+	if i == slen {
+		return 0
+	}
+
+	sign, ans, overflow := 1, 0, false
+
+	if s[i] == '+' {
+		i++
+	} else if s[i] == '-' {
+		sign = -1
+		i++
+	}
+
+	for i < slen && s[i] >= '0' && s[i] <= '9' {
+		val := ans*10 + int(s[i]-'0')
+		if int32(val)/int32(10) != int32(ans) {
+			overflow = true
+			break
+		}
+		ans = val
+		i++
+	}
+
+	if !overflow {
+		return sign * ans
+	}
+
+	if sign == 1 {
+		return 2147483647
+	}
+
+	return -2147483648
+}
