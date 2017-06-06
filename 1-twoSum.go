@@ -19,10 +19,10 @@ func twoSum(nums []int, target int) []int {
 
 	for idx, val := range nums {
 		if idx2, ok := table[val]; ok {
-			ans = []int{idx2, idx}
-		} else {
-			table[target-val] = idx
+			return []int{idx2, idx}
 		}
+
+		table[target-val] = idx
 	}
 
 	return ans
