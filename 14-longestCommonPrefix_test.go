@@ -15,4 +15,5 @@ func TestLongestCommonPrefix(t *testing.T) {
 	testImpl(t, []string{"hello", "held", "helloworld"}, "hel")
 	testImpl(t, []string{"abcdef", "bde"}, "")
 	testImpl(t, []string{"abcdef", "abcd"}, "abcd")
+	testImpl(t, []string{"a"}, "a")
 }

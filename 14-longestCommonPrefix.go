@@ -23,3 +23,23 @@ func longestCommonPrefix(ss []string) string {
 
 	return ans
 }
+
+// A loop variant. It's faster in some cases, but TLE in leetcode OJ.
+func longestCommonPrefix2(ss []string) string {
+	if len(ss) == 0 {
+		return ""
+	}
+
+	i, slen, ans := 0, len(ss[0]), ss[0]
+
+outer:
+	for i < slen {
+		for _, s := range ss[1:] {
+			if s[i] != ans[i] {
+				break outer
+			}
+		}
+	}
+
+	return ans[:i]
+}
