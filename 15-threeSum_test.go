@@ -2,6 +2,10 @@ package leetcode
 
 import "testing"
 
+type Triplet struct {
+	x, y, z int
+}
+
 func makeTriplet(a []int) Triplet {
 	return Triplet{a[0], a[1], a[2]}
 }
