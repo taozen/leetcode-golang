@@ -9,16 +9,7 @@ Input:Digit string "23"
 Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
 */
 
-var dict = map[byte][]byte{
-	'2': []byte{'a', 'b', 'c'},
-	'3': []byte{'d', 'e', 'f'},
-	'4': []byte{'g', 'h', 'i'},
-	'5': []byte{'j', 'k', 'l'},
-	'6': []byte{'m', 'n', 'o'},
-	'7': []byte{'p', 'q', 'r', 's'},
-	'8': []byte{'t', 'u', 'v'},
-	'9': []byte{'w', 'x', 'y', 'z'},
-}
+var dict = []string{"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"}
 
 func letterCombinations(digits string) []string {
 	if len(digits) == 0 {
@@ -29,16 +20,17 @@ func letterCombinations(digits string) []string {
 
 	for i := range digits {
 		d := digits[i]
-		cs, ok := dict[d]
-		if !ok {
+
+		if d < '2' || d > '9' {
 			continue
 		}
 
 		aux = aux[:0]
 		for _, s := range ans {
 			buf := bytes.NewBuffer([]byte(s))
-			for _, c := range cs {
-				buf.WriteByte(c)
+			cs := dict[d-'2']
+			for i := range dict[d-'2'] {
+				buf.WriteByte(cs[i])
 				aux = append(aux, buf.String())
 				buf.Truncate(buf.Len() - 1)
 			}
