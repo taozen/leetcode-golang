@@ -1,5 +1,10 @@
 package leetcode
 
+/*
+Given a roman numeral, convert it to an integer.
+Input is guaranteed to be within the range from 1 to 3999.
+*/
+
 func romanToInt(s string) int {
 	dict := make([]int, 128)
 	dict['I'] = 1
