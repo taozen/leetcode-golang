@@ -10,7 +10,7 @@ func testImpl(t *testing.T, in []int, target, expected int) {
 	}
 }
 
-func TestThreeSum(t *testing.T) {
+func TestThreeSumClosest(t *testing.T) {
 	testImpl(t, []int{-1, 2, 1, -4}, 1, 2)
 	testImpl(t, []int{-1, 2, 1, -4}, 3, 2)
 }
