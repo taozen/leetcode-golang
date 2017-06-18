@@ -11,7 +11,7 @@ func testImpl(t *testing.T, s string, expected bool) {
 	}
 }
 
-func TestRomanToInt(t *testing.T) {
+func TestValidParentheses(t *testing.T) {
 	testImpl(t, "()", true)
 	testImpl(t, "[]", true)
 	testImpl(t, "{}", true)

@@ -25,6 +25,6 @@ func testImpl(t *testing.T, s string, expected []string) {
 	}
 }
 
-func TestRomanToInt(t *testing.T) {
+func TestLetterCombinations(t *testing.T) {
 	testImpl(t, "23", []string{"ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"})
 }
